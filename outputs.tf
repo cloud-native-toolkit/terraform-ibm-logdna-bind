@@ -1,5 +1,4 @@
-#output "myoutput" {
-#  description = "Description of my output"
-#  value       = "value"
-#  depends_on  = [<some resource>]
-#}
+output "sync" {
+  value = "logdna"
+  depends_on = [helm_release.logdna]
+}
