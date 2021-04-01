@@ -6,7 +6,6 @@ module "dev_cluster" {
   ibmcloud_api_key        = var.ibmcloud_api_key
   name                    = var.cluster_name
   worker_count            = 2
-  cluster_exists          = true
   name_prefix             = var.name_prefix
   exists                  = true
   cos_id                  = ""
