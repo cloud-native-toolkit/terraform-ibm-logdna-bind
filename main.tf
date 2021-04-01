@@ -11,8 +11,16 @@ data "ibm_resource_group" "tools_resource_group" {
   name = var.resource_group_name
 }
 
+resource "null_resource" "print_logdna_name" {
+
+  provisioner "local-exec" {
+    command = "echo 'LogDNA instance: ${local.name}'"
+  }
+}
+
 data "ibm_resource_instance" "logdna_instance" {
   count             = local.bind ? 1 : 0
+  depends_on        = [null_resource.print_logdna_name]
 
   name              = local.name
   resource_group_id = data.ibm_resource_group.tools_resource_group.id
