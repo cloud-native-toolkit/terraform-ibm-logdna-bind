@@ -42,6 +42,16 @@ resource "ibm_resource_key" "logdna_instance_key" {
   }
 }
 
+resource null_resource ibmcloud_login {
+  provisioner "local-exec" {
+    command = "${path.module}/scripts/ibmcloud-login.sh ${var.region} ${var.resource_group_name}"
+
+    environment = {
+      APIKEY = var.ibmcloud_api_key
+    }
+  }
+}
+
 resource "null_resource" "setup-ob-plugin" {
   provisioner "local-exec" {
     command = "${path.module}/scripts/setup-ob-plugin.sh"
@@ -50,7 +60,7 @@ resource "null_resource" "setup-ob-plugin" {
 
 resource "null_resource" "logdna_bind" {
   count = local.bind ? 1 : 0
-  depends_on = [null_resource.setup-ob-plugin]
+  depends_on = [null_resource.setup-ob-plugin,null_resource.ibmcloud_login]
 
   triggers = {
     cluster_id  = var.cluster_id
