@@ -8,12 +8,6 @@ variable "region" {
   description = "Geographic location of the resource (e.g. us-south, us-east)"
 }
 
-variable "name_prefix" {
-  type        = string
-  description = "The prefix name for the service. If not provided it will default to the resource group name"
-  default     = ""
-}
-
 variable "name" {
   type        = string
   description = "The name that should be used for the service, particularly when connecting to an existing service. If not provided then the name will be defaulted to {name prefix}-{service}"
