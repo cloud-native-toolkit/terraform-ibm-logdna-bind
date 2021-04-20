@@ -1,11 +1,99 @@
 id: github.com/cloud-native-toolkit/terraform-ibm-logdna-bind
-name: ""
+name: ibm-logdna-bind
 type: terraform
-description: ""
+description: Binds the logdna instance to a cluster
 tags:
   - tools
-  - devops
+  - logging
 versions:
+  - platforms:
+      - kubernetes
+      - ocp3
+      - ocp4
+    dependencies:
+      - id: cluster
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-ibm-container-platform
+            version: ">= 1.7.0"
+          - source: github.com/cloud-native-toolkit/terraform-ibm-ocp-vpc
+            version: ">= 1.0.0"
+          - source: github.com/cloud-native-toolkit/terraform-k8s-ocp-cluster
+            version: ">= 2.0.0"
+      - id: namespace
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-k8s-namespace
+            version: ">= 2.1.0"
+      - id: resource_group
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-ibm-resource-group
+            version: ">= 2.1.0"
+    variables:
+      - name: cluster_id
+        moduleRef:
+          id: cluster
+          output: id
+        optional: true
+        type: string
+        description: The identifier for the cluster
+        default: ""
+      - name: cluster_name
+        moduleRef:
+          id: cluster
+          output: name
+        optional: true
+        type: string
+        description: The name of the cluster
+        default: ""
+      - name: cluster_config_file_path
+        moduleRef:
+          id: cluster
+          output: platform.kubeconfig
+        optional: true
+        type: string
+        description: The path to the config file for the cluster
+        default: ""
+      - name: tools_namespace
+        moduleRef:
+          id: namespace
+          output: name
+          discriminator: tools
+        optional: true
+        type: string
+        description: The namespace where the tools have been deployed (where the configmap should be created)
+        default: default
+      - name: resource_group_name
+        moduleRef:
+          id: resource_group
+          output: name
+        type: string
+        description: Existing resource group where the IKS cluster will be provisioned.
+      - name: region
+        scope: global
+        type: string
+        description: Geographic location of the resource (e.g. us-south, us-east)
+      - name: private_endpoint
+        scope: global
+        type: string
+        description: Flag indicating that the agent should be created with private endpoints
+        default: "true"
+        optional: true
+      - name: ibmcloud_api_key
+        type: string
+        description: The apikey used to access the IBM Cloud account
+      - name: name
+        type: string
+        description: The name that should be used for the service, particularly when connecting to an existing service. If not provided then the name will be defaulted to {name prefix}-{service}
+        default: ""
+        optional: true
+      - name: sync
+        type: string
+        description: Semaphore to synchronize activities between modules
+        default: ""
+        optional: true
+    version: v1.0.0
+    outputs:
+      - name: sync
+        description: output "sync" {   value = "logdna"   depends_on = [helm_release.logdna] }
   - platforms:
       - kubernetes
       - ocp3
@@ -48,28 +136,3 @@ versions:
     #          version: ">= 1.6.0"
     variables: []
     version: v0.0.0
-#    - name: cluster_type
-#      moduleRef:
-#        id: cluster
-#        output: type_code
-#    - name: cluster_ingress_hostname
-#      moduleRef:
-#        id: cluster
-#        output: ingress_hostname
-#    - name: cluster_config_file
-#      moduleRef:
-#        id: cluster
-#        output: config_file_path
-#    - name: tls_secret_name
-#      moduleRef:
-#        id: cluster
-#        output: tls_secret_name
-#    - name: releases_namespace
-#      moduleRef:
-#        id: namespace
-#        output: name
-#        discriminator: tools
-#    - name: icon_url
-#      moduleRef:
-#        id: dashboard
-#        output: base_icon_url
