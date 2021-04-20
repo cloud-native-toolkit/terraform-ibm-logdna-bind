@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         platform:
-          - vpc_count
+          - ocp4_latest
       #      max-parallel: 1
       fail-fast: false
 
