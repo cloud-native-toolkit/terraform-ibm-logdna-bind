@@ -7,20 +7,26 @@ locals {
   cluster_type      = data.local_file.cluster_type.content
 }
 
-data "ibm_resource_group" "tools_resource_group" {
-  name = var.resource_group_name
-}
+resource null_resource print_names {
 
-resource "null_resource" "print_logdna_name" {
+  provisioner "local-exec" {
+    command = "echo 'Resource group name: ${var.resource_group_name}'"
+  }
 
   provisioner "local-exec" {
     command = "echo 'LogDNA instance: ${local.name}'"
   }
 }
 
+data "ibm_resource_group" "tools_resource_group" {
+  depends_on = [null_resource.print_names]
+
+  name = var.resource_group_name
+}
+
 data "ibm_resource_instance" "logdna_instance" {
   count             = local.bind ? 1 : 0
-  depends_on        = [null_resource.print_logdna_name]
+  depends_on        = [null_resource.print_names]
 
   name              = local.name
   resource_group_id = data.ibm_resource_group.tools_resource_group.id
