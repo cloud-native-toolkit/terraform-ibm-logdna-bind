@@ -8,4 +8,6 @@ if [[ -z "${APIKEY}" ]]; then
   exit 1
 fi
 
+ibmcloud config --check-version=false
+
 ibmcloud login -r "${REGION}" -g "${RESOURCE_GROUP}" --apikey "${APIKEY}"
