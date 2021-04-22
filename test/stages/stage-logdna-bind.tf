@@ -7,6 +7,6 @@ module "logdna-bind" {
   cluster_id               = module.dev_cluster.id
   cluster_name             = module.dev_cluster.name
   cluster_config_file_path = module.dev_cluster.config_file_path
-  tools_namespace          = var.namespace
+  tools_namespace          = module.dev_tools_namespace.name
   name                     = module.logdna.name
 }
