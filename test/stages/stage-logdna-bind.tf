@@ -6,7 +6,7 @@ module "logdna-bind" {
   ibmcloud_api_key         = var.ibmcloud_api_key
   cluster_id               = module.dev_cluster.id
   cluster_name             = module.dev_cluster.name
-  cluster_config_file_path = module.dev_cluster.config_file_path
+  cluster_config_file_path = module.dev_cluster.platform.kubeconfig
   tools_namespace          = module.dev_tools_namespace.name
   name                     = module.logdna.name
 }

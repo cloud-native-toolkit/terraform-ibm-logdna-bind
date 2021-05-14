@@ -71,6 +71,7 @@ resource "null_resource" "logdna_bind" {
   triggers = {
     cluster_id  = var.cluster_id
     instance_id = data.ibm_resource_instance.logdna_instance[0].guid
+    kubeconfig  = var.cluster_config_file_path
   }
 
   provisioner "local-exec" {
@@ -78,12 +79,17 @@ resource "null_resource" "logdna_bind" {
 
     environment = {
       SYNC = var.sync
+      KUBECONFIG = self.triggers.kubeconfig
     }
   }
 
   provisioner "local-exec" {
     when    = destroy
     command = "${path.module}/scripts/unbind-instance.sh ${self.triggers.cluster_id} ${self.triggers.instance_id}"
+
+    environment = {
+      KUBECONFIG = self.triggers.kubeconfig
+    }
   }
 }
 
@@ -139,7 +145,7 @@ resource "helm_release" "logdna" {
 
   set {
     name  = "displayName"
-    value = "LogDNA"
+    value = "IBM Logging"
   }
 
   set {
