@@ -13,9 +13,9 @@ variable "ibmcloud_api_key" {
   description = "The apikey used to access the IBM Cloud account"
 }
 
-variable "name" {
+variable "logdna_id" {
   type        = string
-  description = "The name that should be used for the service, particularly when connecting to an existing service. If not provided then the name will be defaulted to {name prefix}-{service}"
+  description = "The id of the logdna instance that will be gound to the cluster"
   default     = ""
 }
 

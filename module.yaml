@@ -66,10 +66,10 @@ versions:
         id: sysdig_bind
         output: sync
       optional: true
-    - name: name
+    - name: logdna_id
       moduleRef:
         id: logdna
-        output: name
+        output: guid
     - name : region
       scope: global
     - name : private_endpoint
