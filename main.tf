@@ -1,20 +1,15 @@
 locals {
   tmp_dir           = "${path.cwd}/.tmp"
-  name              = var.name
   role              = "Manager"
-  bind              = var.name != "" && var.cluster_name != ""
   cluster_type_file = "${local.tmp_dir}/cluster_type.out"
   cluster_type      = data.local_file.cluster_type.content
+  bind              = true
 }
 
 resource null_resource print_names {
 
   provisioner "local-exec" {
     command = "echo 'Resource group name: ${var.resource_group_name}'"
-  }
-
-  provisioner "local-exec" {
-    command = "echo 'LogDNA instance: ${local.name}'"
   }
 }
 
@@ -24,21 +19,11 @@ data "ibm_resource_group" "tools_resource_group" {
   name = var.resource_group_name
 }
 
-data "ibm_resource_instance" "logdna_instance" {
-  count             = local.bind ? 1 : 0
-  depends_on        = [null_resource.print_names]
-
-  name              = local.name
-  resource_group_id = data.ibm_resource_group.tools_resource_group.id
-  location          = var.region
-  service           = "logdna"
-}
-
 resource "ibm_resource_key" "logdna_instance_key" {
   count = local.bind ? 1 : 0
 
-  name                 = "${local.name}-key"
-  resource_instance_id = data.ibm_resource_instance.logdna_instance[0].id
+  name                 = "${var.cluster_name}-key"
+  resource_instance_id = var.logdna_id
   role                 = local.role
 
   //User can increase timeouts
@@ -66,11 +51,11 @@ resource "null_resource" "setup-ob-plugin" {
 
 resource "null_resource" "logdna_bind" {
   count = local.bind ? 1 : 0
-  depends_on = [null_resource.setup-ob-plugin,null_resource.ibmcloud_login]
+  depends_on = [null_resource.setup-ob-plugin, null_resource.ibmcloud_login]
 
   triggers = {
     cluster_id  = var.cluster_id
-    instance_id = data.ibm_resource_instance.logdna_instance[0].guid
+    instance_id = var.logdna_id
     kubeconfig  = var.cluster_config_file_path
   }
 
