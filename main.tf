@@ -55,7 +55,7 @@ resource "null_resource" "logdna_bind" {
 
   triggers = {
     cluster_id  = var.cluster_id
-    instance_id = var.logdna_id
+    instance_id = var.logdna_guid
     kubeconfig  = var.cluster_config_file_path
   }
 

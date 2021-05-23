@@ -15,7 +15,13 @@ variable "ibmcloud_api_key" {
 
 variable "logdna_id" {
   type        = string
-  description = "The id of the logdna instance that will be gound to the cluster"
+  description = "The id of the logdna instance that will be bound to the cluster"
+  default     = ""
+}
+
+variable "logdna_guid" {
+  type        = string
+  description = "The guid of the logdna instance that will be bound to the cluster"
   default     = ""
 }
 

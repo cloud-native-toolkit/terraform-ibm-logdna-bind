@@ -69,6 +69,10 @@ versions:
     - name: logdna_id
       moduleRef:
         id: logdna
+        output: id
+    - name: logdna_guid
+      moduleRef:
+        id: logdna
         output: guid
     - name : region
       scope: global
