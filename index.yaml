@@ -84,6 +84,110 @@ versions:
         type: string
         description: Semaphore to synchronize activities between modules
         default: ""
+      - name: logdna_id
+        moduleRef:
+          id: logdna
+          output: guid
+        type: string
+        description: The id of the logdna instance that will be gound to the cluster
+        default: ""
+        optional: true
+      - name: region
+        scope: global
+        type: string
+        description: Geographic location of the resource (e.g. us-south, us-east)
+      - name: private_endpoint
+        scope: global
+        type: string
+        description: Flag indicating that the agent should be created with private endpoints
+        default: "true"
+        optional: true
+      - name: ibmcloud_api_key
+        scope: global
+        type: string
+        description: The apikey used to access the IBM Cloud account
+    version: v1.1.0
+    outputs:
+      - name: sync
+        description: output "sync" {   value = "logdna"   depends_on = [helm_release.logdna] }
+  - platforms:
+      - kubernetes
+      - ocp3
+      - ocp4
+    dependencies:
+      - id: cluster
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-ibm-container-platform
+            version: ">= 1.7.0"
+          - source: github.com/cloud-native-toolkit/terraform-ibm-ocp-vpc
+            version: ">= 1.0.0"
+          - source: github.com/cloud-native-toolkit/terraform-k8s-ocp-cluster
+            version: ">= 2.0.0"
+      - id: namespace
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-k8s-namespace
+            version: ">= 2.1.0"
+      - id: resource_group
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-ibm-resource-group
+            version: ">= 2.1.0"
+      - id: logdna
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-ibm-logdna
+            version: ">= 3.0.0"
+      - id: sysdig_bind
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-ibm-sysdig-bind
+            version: ">= 1.0.0"
+        optional: true
+    variables:
+      - name: cluster_id
+        moduleRef:
+          id: cluster
+          output: id
+        optional: true
+        type: string
+        description: The identifier for the cluster
+        default: ""
+      - name: cluster_name
+        moduleRef:
+          id: cluster
+          output: name
+        optional: true
+        type: string
+        description: The name of the cluster
+        default: ""
+      - name: cluster_config_file_path
+        moduleRef:
+          id: cluster
+          output: platform.kubeconfig
+        optional: true
+        type: string
+        description: The path to the config file for the cluster
+        default: ""
+      - name: tools_namespace
+        moduleRef:
+          id: namespace
+          output: name
+          discriminator: tools
+        optional: true
+        type: string
+        description: The namespace where the tools have been deployed (where the configmap should be created)
+        default: default
+      - name: resource_group_name
+        moduleRef:
+          id: resource_group
+          output: name
+        type: string
+        description: Existing resource group where the IKS cluster will be provisioned.
+      - name: sync
+        moduleRef:
+          id: sysdig_bind
+          output: sync
+        optional: true
+        type: string
+        description: Semaphore to synchronize activities between modules
+        default: ""
       - name: name
         moduleRef:
           id: logdna
