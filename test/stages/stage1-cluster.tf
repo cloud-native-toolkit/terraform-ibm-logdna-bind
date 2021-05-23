@@ -15,3 +15,9 @@ module "dev_cluster" {
   cos_id              = ""
   login               = true
 }
+
+resource null_resource write_kubeconfig {
+  provisioner "local-exec" {
+    command = "echo '${module.dev_cluster.platform.kubeconfig}' > ${path.cwd}/kubeconfig"
+  }
+}
