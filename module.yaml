@@ -26,6 +26,11 @@ versions:
       refs:
         - source: github.com/cloud-native-toolkit/terraform-ibm-resource-group
           version: ">= 2.1.0"
+    - id: sysdig_bind
+      refs:
+        - source: github.com/cloud-native-toolkit/terraform-ibm-sysdig-bind
+          version: ">= 1.0.0"
+      optional: true
   variables:
     - name: cluster_id
       moduleRef:
@@ -52,6 +57,11 @@ versions:
       moduleRef:
         id: resource_group
         output: name
+    - name: sync
+      moduleRef:
+        id: sysdig_bind
+        output: sync
+      optional: true
     - name : region
       scope: global
     - name : private_endpoint
