@@ -2,7 +2,6 @@ locals {
   tmp_dir           = "${path.cwd}/.tmp"
   role              = "Manager"
   cluster_type_file = "${local.tmp_dir}/cluster_type.out"
-  cluster_type      = data.local_file.cluster_type.content
   bind              = true
 }
 
