@@ -1,11 +1,6 @@
 provider "ibm" {
   region  = var.region
-}
-
-provider "helm" {
-  kubernetes {
-    config_path = var.cluster_config_file_path
-  }
+  ibmcloud_api_key = var.ibmcloud_api_key
 }
 
 provider "null" {}
