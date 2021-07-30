@@ -1,4 +1,4 @@
 output "sync" {
   value = "logdna"
-  depends_on = [helm_release.logdna]
+  depends_on = [null_resource.logdna_bind]
 }
