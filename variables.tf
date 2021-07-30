@@ -19,12 +19,6 @@ variable "logdna_id" {
   default     = ""
 }
 
-variable "cluster_config_file_path" {
-  type        = string
-  description = "The path to the config file for the cluster"
-  default     = ""
-}
-
 variable "cluster_name" {
   type        = string
   description = "The name of the cluster"
@@ -35,12 +29,6 @@ variable "cluster_id" {
   type        = string
   description = "The identifier for the cluster"
   default     = ""
-}
-
-variable "tools_namespace" {
-  type        = string
-  description = "The namespace where the tools have been deployed (where the configmap should be created)"
-  default     = "default"
 }
 
 variable "private_endpoint" {

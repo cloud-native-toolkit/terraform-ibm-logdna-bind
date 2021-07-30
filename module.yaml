@@ -46,17 +46,6 @@ versions:
         id: cluster
         output: name
       optional: true
-    - name: cluster_config_file_path
-      moduleRef:
-        id: cluster
-        output: platform.kubeconfig
-      optional: true
-    - name: tools_namespace
-      moduleRef:
-        id: namespace
-        output: name
-        discriminator: tools
-      optional: true
     - name: resource_group_name
       moduleRef:
         id: resource_group

@@ -13,10 +13,3 @@ if ! kubectl rollout status daemonset/logdna-agent -n ibm-observe; then
   echo "daemonset/logdna-agent rollout status error"
   exit 1
 fi
-
-echo "Checking for console link"
-if ! kubectl get consolelink toolkit-logdna; then
-  echo "consolelink not found"
-  kubectl get consolelink
-  exit 1
-fi
