@@ -18,10 +18,6 @@ versions:
           version: ">= 1.0.0"
         - source: github.com/cloud-native-toolkit/terraform-k8s-ocp-cluster
           version: ">= 2.0.0"
-    - id: namespace
-      refs:
-        - source: github.com/cloud-native-toolkit/terraform-k8s-namespace
-          version: ">= 2.1.0"
     - id: resource_group
       refs:
         - source: github.com/cloud-native-toolkit/terraform-ibm-resource-group
