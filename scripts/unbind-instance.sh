@@ -9,4 +9,5 @@ INSTANCE_ID="$2"
 ibmcloud ob logging config delete \
   --cluster "${CLUSTER_ID}" \
   --instance "${INSTANCE_ID}" \
-  --force
+  --force || \
+  echo "Error deleting logging instance from cluster"
