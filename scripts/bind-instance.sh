@@ -29,6 +29,9 @@ if ibmcloud ob logging config ls --cluster "${CLUSTER_ID}" | grep -q "Instance I
       --cluster "${CLUSTER_ID}" \
       --instance "${EXISTING_INSTANCE_ID}" \
       --force
+
+    echo "  Waiting for the old configuration to be removed..."
+    sleep 300
   fi
 else
   echo "No existing logging config found for ${CLUSTER_ID} cluster"
