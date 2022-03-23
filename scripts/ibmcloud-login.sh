@@ -8,6 +8,10 @@ if [[ -z "${APIKEY}" ]]; then
   exit 1
 fi
 
+if [[ -n "${BIN_DIR}" ]]; then
+  export PATH="${BIN_DIR}:${PATH}"
+fi
+
 ibmcloud config --check-version=false
 
 ibmcloud login -r "${REGION}" -g "${RESOURCE_GROUP}" --apikey "${APIKEY}"

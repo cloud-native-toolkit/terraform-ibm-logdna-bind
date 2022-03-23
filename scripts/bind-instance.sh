@@ -14,6 +14,10 @@ else
   PRIVATE=""
 fi
 
+if [[ -n "${BIN_DIR}" ]]; then
+  export PATH="${BIN_DIR}:${PATH}"
+fi
+
 echo "Configuring LogDNA for ${CLUSTER_ID} cluster and ${INSTANCE_ID} LogDNA instance"
 
 ibmcloud target
