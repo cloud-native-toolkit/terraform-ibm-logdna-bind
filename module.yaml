@@ -1,9 +1,11 @@
-name: ibm-logdna-bind
+name: ibm-log-analysis-bind
+alias: ibm-logdna-bind
 type: terraform
-description: Binds the logdna instance to a cluster
+description: Module to bind the IBM Log Analysis instance to a cluster
 tags:
     - tools
     - logging
+    - kubernetes
 versions:
 - platforms:
     - kubernetes
@@ -19,11 +21,11 @@ versions:
           version: ">= 2.1.0"
     - id: logdna
       refs:
-        - source: github.com/cloud-native-toolkit/terraform-ibm-logdna
+        - source: github.com/cloud-native-toolkit/terraform-ibm-log-analysis
           version: ">= 3.0.0"
     - id: sysdig_bind
       refs:
-        - source: github.com/cloud-native-toolkit/terraform-ibm-sysdig-bind
+        - source: github.com/cloud-native-toolkit/terraform-ibm-cloud-monitoring-bind
           version: ">= 1.0.0"
       optional: true
   variables:
