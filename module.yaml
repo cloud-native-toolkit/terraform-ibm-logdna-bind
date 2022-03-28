@@ -11,13 +11,8 @@ versions:
     - ocp4
   dependencies:
     - id: cluster
-      refs:
-        - source: github.com/cloud-native-toolkit/terraform-ibm-container-platform
-          version: ">= 1.7.0"
-        - source: github.com/cloud-native-toolkit/terraform-ibm-ocp-vpc
-          version: ">= 1.0.0"
-        - source: github.com/cloud-native-toolkit/terraform-k8s-ocp-cluster
-          version: ">= 2.0.0"
+      interface: github.com/cloud-native-toolkit/automation-modules#cluster
+      refs: []
     - id: resource_group
       refs:
         - source: github.com/cloud-native-toolkit/terraform-ibm-resource-group

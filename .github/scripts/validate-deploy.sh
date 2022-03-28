@@ -2,6 +2,10 @@
 
 KUBECONFIG=$(cat ./kubeconfig)
 
+BIN_DIR=$(cat .bin_dir)
+
+export PATH="${BIN_DIR}:${PATH}"
+
 echo "Checking for logdna-agent daemonset"
 if ! kubectl get daemonset logdna-agent -n ibm-observe; then
   echo "logdna-agent daemonset not found"

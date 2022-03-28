@@ -3,6 +3,6 @@ module "logdna" {
 
   resource_group_name      = var.resource_group_name
   region                   = var.region
-  provision                = false
+  provision                = true
   name_prefix              = var.name_prefix
 }

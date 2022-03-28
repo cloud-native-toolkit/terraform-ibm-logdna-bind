@@ -6,6 +6,10 @@ MODULE_DIR=$(cd ${SCRIPT_DIR}/..; pwd -P)
 CLUSTER_ID="$1"
 INSTANCE_ID="$2"
 
+if [[ -n "${BIN_DIR}" ]]; then
+  export PATH="${BIN_DIR}:${PATH}"
+fi
+
 ibmcloud ob logging config delete \
   --cluster "${CLUSTER_ID}" \
   --instance "${INSTANCE_ID}" \
