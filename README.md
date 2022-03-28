@@ -1,6 +1,6 @@
-# IBM Cloud LogDNA bind module
+# IBM Log Analysis bind module
 
-Module to bind a LogDNA instance to a cluster.
+Module to bind an existing IBM Log Analysis instance to a cluster.
 
 ## Software dependencies
 
@@ -8,8 +8,7 @@ The module depends on the following software components:
 
 ### Command-line tools
 
-- terraform - v13
-- kubectl
+- terraform - v0.13
 
 ### Terraform providers
 
@@ -26,8 +25,8 @@ This module makes use of the output from other modules:
 ## Example usage
 
 ```hcl-terraform
-module "logdna-bind" {
-  source = "github.com/cloud-native-toolkit/terraform-ibm-logdna-bind.git"
+module "log-bind" {
+  source = "github.com/cloud-native-toolkit/terraform-ibm-log-analysis-bind.git"
 
   resource_group_name      = var.resource_group_name
   region                   = var.region
@@ -35,8 +34,6 @@ module "logdna-bind" {
   cluster_name             = module.dev_cluster.name
   cluster_config_file_path = module.dev_cluster.config_file_path
   tools_namespace          = module.dev_capture_state.namespace
-  name                     = module.logdna.name
+  name                     = module.log_analysis.name
 }
-
 ```
-
