@@ -11,6 +11,7 @@ variable "region" {
 variable "ibmcloud_api_key" {
   type        = string
   description = "The apikey used to access the IBM Cloud account"
+  sensitive   = true
 }
 
 variable "logdna_id" {

@@ -1,4 +1,9 @@
 terraform {
+  required_providers {
+    ibm = {
+      source = "ibm-cloud/ibm"
+    }
+  }
 }
 module setup_clis {
   source = "github.com/cloud-native-toolkit/terraform-util-clis.git"
