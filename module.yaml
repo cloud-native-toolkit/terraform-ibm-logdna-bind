@@ -1,5 +1,6 @@
 name: ibm-log-analysis-bind
 alias: ibm-logdna-bind
+registryId: cloud-native-toolkit/log-analysis-bind/ibm
 type: terraform
 description: Module to bind the IBM Log Analysis instance to a cluster
 tags:
