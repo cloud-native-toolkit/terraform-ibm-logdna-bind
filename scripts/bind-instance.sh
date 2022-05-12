@@ -18,9 +18,25 @@ if [[ -n "${BIN_DIR}" ]]; then
   export PATH="${BIN_DIR}:${PATH}"
 fi
 
+if [[ -z "${IBMCLOUD_API_KEY}" ]]; then
+  echo "IBMCLOUD_API_KEY must be provided as an environment variable" >&2
+  exit 1
+fi
+
+if [[ -z "${REGION}" ]]; then
+  echo "REGION must be provided as an environment variable" >&2
+  exit 1
+fi
+
+if [[ -z "${RESOURCE_GROUP}" ]]; then
+  echo "RESOURCE_GROUP must be provided as an environment variable" >&2
+  exit 1
+fi
+
 echo "Configuring LogDNA for ${CLUSTER_ID} cluster and ${INSTANCE_ID} LogDNA instance"
 
-ibmcloud target
+ibmcloud login -r "${REGION}" -g "${RESOURCE_GROUP}"
+
 if ibmcloud ob logging config ls --cluster "${CLUSTER_ID}" | grep -q "Instance ID"; then
   EXISTING_INSTANCE_ID=$(ibmcloud ob logging config ls --cluster "${CLUSTER_ID}" | grep "Instance ID" | sed -E "s/Instance ID: +([^ ]+)/\1/g")
   if [[ "${EXISTING_INSTANCE_ID}" == "${INSTANCE_ID}" ]]; then
