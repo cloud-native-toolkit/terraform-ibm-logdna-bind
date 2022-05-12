@@ -29,6 +29,8 @@ EXISTING_INSTANCE_ID=$(curl -s -X GET "${BASE_URL}/getConfigs?query=${CLUSTER_ID
   -H "Authorization: Bearer ${TOKEN}" \
   jq -r '.[] | .instanceId // empty')
 
+echo "Existing instance id: ${EXISTING_INSTANCE_ID}"
+
 if [[ -n "${EXISTING_INSTANCE_ID}" ]]; then
   if [[ "${EXISTING_INSTANCE_ID}" == "${INSTANCE_ID}" ]]; then
     echo "LogDNA configuration already exists on this cluster"
@@ -53,6 +55,7 @@ if [[ -n "${EXISTING_INSTANCE_ID}" ]]; then
         break
       else
         echo "    LogDNA instance still exists. Waiting..."
+        echo "    ${RESPONSE}"
         sleep 30
       fi
     done
