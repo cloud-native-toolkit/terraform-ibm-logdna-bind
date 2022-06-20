@@ -38,6 +38,11 @@ resource "ibm_resource_key" "logdna_instance_key" {
   }
 }
 
+locals {
+  resource_credentials = local.bind ? jsondecode(ibm_resource_key.logdna_instance_key[0].credentials_json) : { "ingestion_key" : "NA" }
+  logdna_key = local.resource_credentials.ingestion_key
+}
+
 resource "null_resource" "logdna_bind" {
   count = local.bind ? 1 : 0
 
@@ -51,7 +56,7 @@ resource "null_resource" "logdna_bind" {
   }
 
   provisioner "local-exec" {
-    command = "${path.module}/scripts/bind-instance.sh '${self.triggers.cluster_id}' '${self.triggers.instance_id}' '${ibm_resource_key.logdna_instance_key[0].name}' '${var.private_endpoint}'"
+    command = "${path.module}/scripts/bind-instance.sh '${self.triggers.cluster_id}' '${self.triggers.instance_id}' '${local.logdna_key}' '${var.private_endpoint}'"
 
     environment = {
       BIN_DIR = self.triggers.bin_dir
