@@ -83,6 +83,85 @@ versions:
           id: sysdig_bind
           output: sync
         optional: true
+    version: v1.3.5
+    outputs:
+      - name: sync
+  - platforms:
+      - kubernetes
+      - ocp3
+      - ocp4
+    dependencies:
+      - id: cluster
+        interface: github.com/cloud-native-toolkit/automation-modules#cluster
+        refs: []
+      - id: resource_group
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-ibm-resource-group
+            version: '>= 2.1.0'
+      - id: logdna
+        refs:
+          - source: github.com/cloud-native-toolkit/terraform-ibm-log-analysis
+            version: '>= 3.0.0'
+      - id: sysdig_bind
+        refs:
+          - source: >-
+              github.com/cloud-native-toolkit/terraform-ibm-cloud-monitoring-bind
+            version: '>= 1.0.0'
+        optional: true
+    variables:
+      - name: resource_group_name
+        type: string
+        description: Existing resource group where the IKS cluster will be provisioned.
+        moduleRef:
+          id: resource_group
+          output: name
+      - name: region
+        type: string
+        description: Geographic location of the resource (e.g. us-south, us-east)
+        scope: global
+      - name: ibmcloud_api_key
+        type: string
+        description: The apikey used to access the IBM Cloud account
+        sensitive: true
+        scope: global
+      - name: logdna_id
+        type: string
+        description: The id of the logdna instance that will be gound to the cluster
+        default: ''
+        moduleRef:
+          id: logdna
+          output: guid
+      - name: cluster_name
+        type: string
+        description: The name of the cluster
+        default: ''
+        moduleRef:
+          id: cluster
+          output: name
+        optional: true
+      - name: cluster_id
+        type: string
+        description: The identifier for the cluster
+        default: ''
+        moduleRef:
+          id: cluster
+          output: id
+        optional: true
+      - name: private_endpoint
+        type: string
+        description: >-
+          Flag indicating that the agent should be created with private
+          endpoints
+        default: 'true'
+        scope: global
+      - name: sync
+        type: string
+        description: Semaphore to synchronize activities between modules
+        default: ''
+        moduleRef:
+          id: sysdig_bind
+          output: sync
+        optional: true
     version: v1.3.4
     outputs:
       - name: sync
