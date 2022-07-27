@@ -7,4 +7,5 @@ module "logdna-bind" {
   cluster_id               = module.dev_cluster.id
   cluster_name             = module.dev_cluster.name
   logdna_id                = module.logdna.guid
+  logdna_crn               = module.logdna.id
 }

@@ -53,6 +53,10 @@ versions:
       moduleRef:
         id: logdna
         output: guid
+    - name: logdna_crn
+      moduleRef:
+        id: logdna
+        output: id
     - name : region
       scope: global
     - name : private_endpoint

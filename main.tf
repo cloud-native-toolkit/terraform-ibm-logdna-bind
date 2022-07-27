@@ -28,7 +28,7 @@ resource "ibm_resource_key" "logdna_instance_key" {
   count = local.bind ? 1 : 0
 
   name                 = "${var.cluster_name}-key"
-  resource_instance_id = var.logdna_id
+  resource_instance_id = var.logdna_crn != "" ? var.logdna_crn : var.logdna_id
   role                 = local.role
 
   //User can increase timeouts
