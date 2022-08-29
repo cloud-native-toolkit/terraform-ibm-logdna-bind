@@ -1,7 +1,7 @@
 module "logdna-bind" {
   source = "./module"
 
-  resource_group_name      = module.resource_group_name
+  resource_group_name      = module.resource_group.name
   region                   = var.region
   ibmcloud_api_key         = var.ibmcloud_api_key
   cluster_id               = module.dev_cluster.id
