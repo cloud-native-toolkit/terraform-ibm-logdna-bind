@@ -7,6 +7,6 @@ module "subnets" {
   gateways          = module.gateways.gateways
   _count            = 2
   label             = "bastion"
-  common_tags = var.common_tags
+  common_tags = local.common_tags
   tags = ["subnet"]
 }

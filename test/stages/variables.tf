@@ -76,7 +76,3 @@ variable "vpc_subnet_label" {
   type        = string
   default     = "cluster"
 }
-
-variable "common_tags" {
-  value = ["logdna-bind"]
-}

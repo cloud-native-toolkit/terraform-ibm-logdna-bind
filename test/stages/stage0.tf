@@ -27,4 +27,5 @@ resource random_string suffix {
 
 locals {
   name_prefix = "ee-${random_string.suffix.result}"
+  common_tags = ["lognda-bind",random_string.suffix.result]
 }

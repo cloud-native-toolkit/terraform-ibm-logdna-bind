@@ -7,13 +7,13 @@ module "dev_cluster" {
   name                = var.cluster_name
   worker_count        = var.worker_count
   ocp_version         = var.ocp_version
-  exists              = var.cluster_exists
+  exists              = false
   name_prefix         = local.name_prefix
   vpc_name            = module.subnets.vpc_name
   vpc_subnets         = module.subnets.subnets
   vpc_subnet_count    = module.subnets.count
   cos_id              = module.cos.id
-  common_tags         = var.common_tags
+  common_tags         = local.common_tags
   tags = ["openshift"]
 }
 
