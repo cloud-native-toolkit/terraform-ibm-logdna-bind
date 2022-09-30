@@ -17,3 +17,16 @@ resource local_file bin_dir {
 
   content = module.setup_clis.bin_dir
 }
+
+resource random_string suffix {
+  length = 16
+
+  upper = false
+  special = false
+}
+
+locals {
+  name_prefix = "ee-${random_string.suffix.result}"
+  resource_group_name = "ee-${random_string.suffix.result}"
+  common_tags = ["lognda-bind",random_string.suffix.result]
+}
